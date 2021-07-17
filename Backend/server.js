@@ -23,26 +23,6 @@ mongoose.connect(url, {
 },
   (err) => { if (err) { throw err } console.log("Mongoose ile bağlantı kuruldu.") })
 
-app.get("/AdminEkle", async (req, res) => {
-  const kullaniciAdi = "admin";
-  const sifre = "123";
-  const salt = await bcrypt.genSalt();
-  const passwordHash = await bcrypt.hash(sifre, salt);
-  Admin.create({
-    kullaniciAdi,
-    sifre: passwordHash
-  }, err => {
-    if (err) {
-      console.log("hata")
-    }
-    else {
-      console.log("başarılı")
-    }
-
-  })
-
-})
-
 app.post("/AdminGiris", async (req, res) => {
   const { mail, parola } = req.body;
   const user = await Admin.findOne({ kullaniciAdi: mail })
